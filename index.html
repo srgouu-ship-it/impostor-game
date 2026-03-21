@@ -167,6 +167,44 @@
       cursor: pointer;
     }
 
+    /* Category grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .cat-btn {
+      background: var(--surface2);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      padding: 12px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .cat-btn:hover { border-color: var(--accent); }
+    .cat-btn.selected { border-color: var(--accent2); background: rgba(168,85,247,0.15); }
+    .cat-btn .cat-emoji { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+    .cat-btn .cat-name { font-weight: 600; }
+    .cat-btn .cat-desc { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+    .category-banner {
+      background: rgba(168,85,247,0.12);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px 16px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .category-banner .cat-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; }
+    .category-banner .cat-value { font-size: 1.1rem; font-weight: 700; color: var(--accent2); }
+
     /* Role reveal screen */
     .big-name {
       font-size: 2.5rem;
@@ -191,13 +229,8 @@
       margin-bottom: 16px;
     }
 
-    .role-secret {
-      display: none;
-    }
-
-    .role-secret.shown {
-      display: block;
-    }
+    .role-secret { display: none; }
+    .role-secret.shown { display: block; }
 
     .word-display {
       font-size: 2.2rem;
@@ -327,13 +360,6 @@
 
     .vote-btn:hover { border-color: var(--accent); }
     .vote-btn.selected { border-color: var(--accent); background: rgba(124, 58, 237, 0.15); }
-    .vote-count {
-      background: var(--surface);
-      border-radius: 20px;
-      padding: 2px 10px;
-      font-size: 0.8rem;
-      color: var(--accent2);
-    }
 
     /* Results screen */
     .result-card {
@@ -347,62 +373,6 @@
     .result-icon { font-size: 4rem; margin-bottom: 8px; }
     .result-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
     .result-sub { color: var(--muted); font-size: 0.9rem; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 16px 0;
-    }
-
-    .stat-box {
-      background: var(--surface2);
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .stat-box .stat-num {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent2);
-    }
-
-    .stat-box .stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .impostor-guess-box {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid var(--red);
-      border-radius: 12px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-
-    .impostor-guess-box h3 {
-      color: var(--red);
-      font-size: 0.95rem;
-      margin-bottom: 10px;
-    }
-
-    .impostor-guess-box .guess-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .impostor-guess-box input { flex: 1; margin: 0; }
-    .impostor-guess-box button {
-      background: var(--red);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-weight: 700;
-      padding: 10px 18px;
-      cursor: pointer;
-    }
 
     .vote-results {
       display: flex;
@@ -433,8 +403,7 @@
     }
 
     .progress-dots .dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--border);
     }
@@ -442,16 +411,33 @@
     .progress-dots .dot.done { background: var(--accent2); }
     .progress-dots .dot.active { background: var(--accent); }
 
-    .word-bank-hint {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 6px;
+    .impostor-guess-box {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--red);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .impostor-guess-box h3 { color: var(--red); font-size: 0.95rem; margin-bottom: 10px; }
+
+    .impostor-guess-box .guess-row { display: flex; gap: 8px; }
+    .impostor-guess-box input { flex: 1; margin: 0; }
+    .impostor-guess-box button {
+      background: var(--red);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 18px;
+      cursor: pointer;
     }
 
     @media (max-width: 400px) {
       h1 { font-size: 1.5rem; }
       .big-name { font-size: 1.8rem; }
       .word-display { font-size: 1.6rem; }
+      .category-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -472,24 +458,29 @@
   </div>
 
   <div class="card">
-    <h2>⚙️ Game Settings</h2>
+    <h2>📂 Category</h2>
+    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">Everyone will know the category — the impostor uses it to fake their clues.</p>
+    <div class="category-grid" id="category-grid"></div>
+    <div style="margin-top:14px;">
+      <label>Or type a custom word (optional)</label>
+      <input id="custom-word" type="text" placeholder="e.g. Espresso, Kilimanjaro..." maxlength="30" />
+      <p style="font-size:0.75rem; color:var(--muted); margin-top:4px;">If filled, overrides the random pick from selected category.</p>
+    </div>
+  </div>
 
+  <div class="card">
+    <h2>⚙️ Game Settings</h2>
     <label>Number of Impostors</label>
     <select id="impostor-count">
       <option value="1">1 Impostor</option>
       <option value="2">2 Impostors</option>
     </select>
-
     <label>Rounds per Game</label>
     <select id="round-count">
       <option value="1">1 Round</option>
       <option value="2">2 Rounds</option>
       <option value="3" selected>3 Rounds</option>
     </select>
-
-    <label>Word (leave blank for random)</label>
-    <input id="custom-word" type="text" placeholder="e.g. Coffee, Pyramid, Guitar..." maxlength="30" />
-    <p class="word-bank-hint">Random words: Coffee, Guitar, Pyramid, Elephant, Birthday, Ocean, Fireplace, Soccer, Library, Robot...</p>
   </div>
 
   <button class="btn" onclick="startGame()">🎮 Start Game</button>
@@ -499,19 +490,27 @@
 <div id="screen-reveal" class="screen">
   <div class="card">
     <div id="reveal-progress" class="progress-dots"></div>
+
     <div id="reveal-cover" class="cover-screen">
       <span class="cover-icon">📵</span>
       <p style="font-weight:600; font-size:1.1rem;">Pass the phone to</p>
       <div id="reveal-player-name" class="big-name"></div>
       <p style="color:var(--muted); font-size:0.85rem;">Make sure others can't see!</p>
     </div>
+
     <div id="reveal-role" style="display:none;">
+      <!-- Category always visible -->
+      <div class="category-banner">
+        <div class="cat-label">CATEGORY (everyone knows this)</div>
+        <div class="cat-value" id="reveal-category-name"></div>
+      </div>
+
       <div class="role-box" id="role-tap-box" onclick="toggleWordReveal()">
-        <p class="tap-hint">👆 Tap to see your role</p>
+        <p class="tap-hint">👆 Tap to see your word</p>
         <div class="role-secret" id="role-secret-content">
           <div class="word-display" id="reveal-word"></div>
           <div id="reveal-badge"></div>
-          <p style="color:var(--muted); font-size:0.8rem; margin-top:12px;">Remember your word, then cover it!</p>
+          <p style="color:var(--muted); font-size:0.8rem; margin-top:12px;">Remember it, then cover the screen!</p>
         </div>
       </div>
       <button class="btn ghost" onclick="nextReveal()">✅ Done, pass to next player</button>
@@ -530,6 +529,9 @@
       <span class="round-badge" id="round-turn-display"></span>
     </div>
 
+    <!-- Category reminder visible during play -->
+    <div class="category-banner" id="round-category-banner"></div>
+
     <div class="current-player-display">
       <div class="cue">It's your turn:</div>
       <div class="name" id="current-player-name"></div>
@@ -541,28 +543,26 @@
     </div>
 
     <div class="clue-input-row">
-      <input id="clue-input" type="text" placeholder="Your clue..." maxlength="30" onkeydown="if(event.key==='Enter')submitClue()" />
+      <input id="clue-input" type="text" placeholder="Your clue..." maxlength="30"
+        onkeydown="if(event.key==='Enter')submitClue()" />
       <button onclick="submitClue()">→</button>
     </div>
   </div>
 
-  <button class="btn" onclick="proceedToVote()" id="vote-now-btn" style="display:none;">🗳️ Skip to Vote</button>
+  <button class="btn ghost" onclick="proceedToVote()" id="vote-now-btn" style="display:none;">🗳️ Skip to Vote</button>
 </div>
 
 <!-- ============ VOTE SCREEN ============ -->
 <div id="screen-vote" class="screen">
   <div class="card">
     <h2>🗳️ Who's the Impostor?</h2>
-    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:16px;">All players vote simultaneously. Discuss, then each person selects a suspect.</p>
-
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:16px;">Discuss, then each person votes privately.</p>
     <div id="vote-pending-label" style="font-size:0.85rem; color:var(--muted); margin-bottom:8px;"></div>
     <div id="vote-list" class="vote-list"></div>
-
     <div id="vote-confirm" style="display:none; margin-top:16px;">
-      <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Currently voting: <strong id="current-voter-name"></strong></p>
+      <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Voting: <strong id="current-voter-name"></strong></p>
       <button class="btn" onclick="confirmVote()">✅ Confirm Vote</button>
     </div>
-
     <div id="vote-submit-wrap" style="display:none;">
       <button class="btn" onclick="revealVotes()">🔍 Reveal Votes</button>
     </div>
@@ -579,9 +579,9 @@
 
   <div id="impostor-guess-section" class="card" style="display:none;">
     <div class="impostor-guess-box">
-      <h3>🎯 Impostor's Last Chance!</h3>
+      <h3 id="guess-box-title">🎯 Impostor's Last Chance!</h3>
       <p style="font-size:0.85rem; color:var(--muted); margin-bottom:10px;">
-        The impostor was caught — but can you guess the word to steal the win?
+        Caught — but guess the exact word to steal the win!
       </p>
       <div class="guess-row">
         <input id="impostor-guess-input" type="text" placeholder="What's the word?" maxlength="30"
@@ -598,7 +598,8 @@
   </div>
 
   <div id="reveal-word-card" class="card" style="display:none; text-align:center;">
-    <p style="color:var(--muted); font-size:0.85rem;">The secret word was:</p>
+    <p style="color:var(--muted); font-size:0.85rem;">Category: <strong id="revealed-category"></strong></p>
+    <p style="color:var(--muted); font-size:0.85rem; margin-top:4px;">The secret word was:</p>
     <div class="word-display" id="revealed-secret-word"></div>
     <p style="color:var(--muted); font-size:0.85rem; margin-top:8px;">Impostors: <strong id="revealed-impostors"></strong></p>
   </div>
@@ -616,16 +617,64 @@
 </div>
 
 <script>
-// ===================== WORD BANK =====================
-const WORD_BANK = [
-  "Coffee", "Guitar", "Pyramid", "Elephant", "Birthday",
-  "Ocean", "Fireplace", "Soccer", "Library", "Robot",
-  "Volcano", "Scissors", "Lighthouse", "Umbrella", "Compass",
-  "Telescope", "Carnival", "Suitcase", "Lantern", "Cactus",
-  "Submarine", "Hammock", "Glacier", "Mitten", "Cobweb",
-  "Dominoes", "Hourglass", "Marionette", "Quicksand", "Sundial",
-  "Thunderstorm", "Trampoline", "Kaleidoscope", "Labyrinth", "Periscope",
-  "Avalanche", "Boomerang", "Cathedral", "Dungeon", "Escalator"
+// ===================== WORD BANK BY CATEGORY =====================
+const CATEGORIES = [
+  {
+    id: "food",
+    emoji: "🍕",
+    name: "Food & Drinks",
+    desc: "What you eat & drink",
+    words: ["Espresso", "Sushi", "Croissant", "Taco", "Tiramisu", "Smoothie", "Ramen", "Fondue", "Guacamole", "Lasagna", "Churro", "Dumplings", "Baklava", "Nachos", "Risotto"]
+  },
+  {
+    id: "nature",
+    emoji: "🌍",
+    name: "Nature & Places",
+    desc: "Earth, geography, wild",
+    words: ["Volcano", "Glacier", "Rainforest", "Canyon", "Avalanche", "Quicksand", "Lagoon", "Tundra", "Waterfall", "Desert", "Coral Reef", "Geyser", "Mangrove", "Fjord", "Savanna"]
+  },
+  {
+    id: "objects",
+    emoji: "🎸",
+    name: "Objects & Things",
+    desc: "Everyday stuff",
+    words: ["Guitar", "Compass", "Telescope", "Scissors", "Hourglass", "Lantern", "Suitcase", "Umbrella", "Boomerang", "Periscope", "Kaleidoscope", "Sundial", "Hammock", "Marionette", "Cobweb"]
+  },
+  {
+    id: "animals",
+    emoji: "🐘",
+    name: "Animals",
+    desc: "Creatures big & small",
+    words: ["Elephant", "Platypus", "Chameleon", "Narwhal", "Axolotl", "Flamingo", "Pangolin", "Mantis", "Capybara", "Meerkat", "Tapir", "Okapi", "Kiwi", "Wombat", "Blobfish"]
+  },
+  {
+    id: "entertainment",
+    emoji: "🎭",
+    name: "Movies & Pop Culture",
+    desc: "Film, music, games",
+    words: ["Titanic", "Minecraft", "Superman", "Karaoke", "Carnival", "Circus", "Broadway", "Podcast", "Cosplay", "Marathon", "Fireworks", "Arcade", "Rollercoaster", "Karate", "Ballet"]
+  },
+  {
+    id: "science",
+    emoji: "🔬",
+    name: "Science & Tech",
+    desc: "Nerdy stuff",
+    words: ["Robot", "Black Hole", "Quantum", "Supernova", "DNA", "Laser", "Submarine", "Satellite", "Algorithm", "Asteroid", "Wormhole", "Transistor", "Hologram", "Neuron", "Prism"]
+  },
+  {
+    id: "sports",
+    emoji: "⚽",
+    name: "Sports & Games",
+    desc: "Athletic & competitive",
+    words: ["Soccer", "Curling", "Fencing", "Surfing", "Archery", "Bobsled", "Polo", "Judo", "Lacrosse", "Triathlon", "Skateboard", "Snooker", "Darts", "Wrestling", "Rowing"]
+  },
+  {
+    id: "random",
+    emoji: "🎲",
+    name: "Random Mix",
+    desc: "Wild card — anything goes",
+    words: ["Birthday", "Library", "Pyramid", "Labyrinth", "Dungeon", "Lighthouse", "Cathedral", "Dominoes", "Thunderstorm", "Trampoline", "Cactus", "Mitten", "Escalator", "Cobweb", "Fireplace"]
+  }
 ];
 
 // ===================== GAME STATE =====================
@@ -634,9 +683,10 @@ let state = {
   impostorCount: 1,
   totalRounds: 3,
   customWord: "",
+  selectedCategory: null,
   currentRound: 0,
-  // per round
   word: "",
+  category: null,
   impostors: [],
   revealIndex: 0,
   clues: [],
@@ -645,7 +695,6 @@ let state = {
   votes: {},
   voterIndex: 0,
   selectedVote: null,
-  roundResults: [],
 };
 
 // ===================== SCREEN LOGIC =====================
@@ -653,6 +702,25 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
 }
+
+// ===================== CATEGORIES RENDER =====================
+function renderCategories() {
+  const grid = document.getElementById('category-grid');
+  grid.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const btn = document.createElement('div');
+    btn.className = 'cat-btn' + (state.selectedCategory === cat.id ? ' selected' : '');
+    btn.innerHTML = `<span class="cat-emoji">${cat.emoji}</span><div class="cat-name">${cat.name}</div><div class="cat-desc">${cat.desc}</div>`;
+    btn.onclick = () => {
+      state.selectedCategory = cat.id;
+      renderCategories();
+      document.getElementById('custom-word').value = '';
+    };
+    grid.appendChild(btn);
+  });
+}
+
+renderCategories();
 
 // ===================== SETUP =====================
 function renderPlayers() {
@@ -689,28 +757,35 @@ document.getElementById('new-player-input').addEventListener('keydown', function
 
 function startGame() {
   if (state.players.length < 3) { alert("Need at least 3 players!"); return; }
+  const customWord = document.getElementById('custom-word').value.trim();
+  if (!customWord && !state.selectedCategory) {
+    alert("Please select a category (or enter a custom word)!"); return;
+  }
   state.impostorCount = parseInt(document.getElementById('impostor-count').value);
   state.totalRounds = parseInt(document.getElementById('round-count').value);
-  state.customWord = document.getElementById('custom-word').value.trim();
-  if (state.impostorCount >= state.players.length) { alert("Too many impostors for player count!"); return; }
+  state.customWord = customWord;
+  if (state.impostorCount >= state.players.length) { alert("Too many impostors!"); return; }
 
   state.scores = {};
   state.players.forEach(p => state.scores[p] = 0);
   state.currentRound = 0;
-  state.roundResults = [];
   startRound();
 }
 
 // ===================== ROUND START =====================
 function startRound() {
   state.currentRound++;
-  // Pick word
+
   if (state.customWord) {
     state.word = state.customWord;
+    state.category = { emoji: '✏️', name: 'Custom Word' };
   } else {
-    state.word = WORD_BANK[Math.floor(Math.random() * WORD_BANK.length)];
+    const cat = CATEGORIES.find(c => c.id === state.selectedCategory);
+    const words = cat.words;
+    state.word = words[Math.floor(Math.random() * words.length)];
+    state.category = cat;
   }
-  // Pick impostors
+
   const shuffled = [...state.players].sort(() => Math.random() - 0.5);
   state.impostors = shuffled.slice(0, state.impostorCount);
   state.clues = [];
@@ -720,7 +795,6 @@ function startRound() {
   state.voterIndex = 0;
   state.selectedVote = null;
 
-  // Build reveal progress dots
   buildRevealProgress();
   showRevealCover(0);
   showScreen('reveal');
@@ -747,13 +821,9 @@ function updateRevealDots(index) {
 function showRevealCover(index) {
   document.getElementById('reveal-cover').style.display = 'block';
   document.getElementById('reveal-role').style.display = 'none';
-  const p = state.players[index];
-  document.getElementById('reveal-player-name').textContent = p;
+  document.getElementById('reveal-player-name').textContent = state.players[index];
   updateRevealDots(index);
-
-  // Hide secret
-  const secret = document.getElementById('role-secret-content');
-  secret.classList.remove('shown');
+  document.getElementById('role-secret-content').classList.remove('shown');
   document.querySelector('#role-tap-box .tap-hint').style.display = 'block';
 }
 
@@ -764,7 +834,6 @@ function toggleWordReveal() {
     secret.classList.remove('shown');
     hint.style.display = 'block';
   } else {
-    // Fill content
     const p = state.players[state.revealIndex];
     const isImpostor = state.impostors.includes(p);
     document.getElementById('reveal-word').textContent = isImpostor ? '???' : state.word;
@@ -778,15 +847,16 @@ function toggleWordReveal() {
 }
 
 document.getElementById('reveal-cover').addEventListener('click', function() {
+  // Show category (always visible), then role box
+  document.getElementById('reveal-category-name').textContent =
+    `${state.category.emoji} ${state.category.name}`;
   document.getElementById('reveal-cover').style.display = 'none';
   document.getElementById('reveal-role').style.display = 'block';
-  // reset
   document.getElementById('role-secret-content').classList.remove('shown');
   document.querySelector('#role-tap-box .tap-hint').style.display = 'block';
 });
 
 function nextReveal() {
-  // hide secret first (if shown)
   document.getElementById('role-secret-content').classList.remove('shown');
   state.revealIndex++;
   if (state.revealIndex >= state.players.length) {
@@ -799,6 +869,9 @@ function nextReveal() {
 // ===================== ROUND PLAY =====================
 function startRoundPlay() {
   document.getElementById('round-display').textContent = `${state.currentRound} / ${state.totalRounds}`;
+  // Category banner
+  document.getElementById('round-category-banner').innerHTML =
+    `<div class="cat-label">CATEGORY</div><div class="cat-value">${state.category.emoji} ${state.category.name}</div>`;
   renderCluesTurn();
   showScreen('round');
   document.getElementById('vote-now-btn').style.display = 'none';
@@ -836,7 +909,6 @@ function submitClue() {
   state.playerClueIndex++;
 
   if (state.playerClueIndex >= state.players.length) {
-    // All players gave clue → go to vote
     proceedToVote();
   } else {
     renderCluesTurn();
@@ -861,7 +933,7 @@ function renderVoteScreen() {
   const list = document.getElementById('vote-list');
   list.innerHTML = '';
   state.players.forEach(p => {
-    if (p === currentVoter) return; // can't vote for self
+    if (p === currentVoter) return;
     const btn = document.createElement('button');
     btn.className = 'vote-btn';
     btn.innerHTML = `<span>${p}</span>`;
@@ -894,7 +966,6 @@ function confirmVote() {
 
 // ===================== RESULTS =====================
 function revealVotes() {
-  // Tally votes
   const tally = {};
   state.players.forEach(p => tally[p] = 0);
   Object.values(state.votes).forEach(v => {
@@ -903,14 +974,12 @@ function revealVotes() {
 
   const maxVotes = Math.max(...Object.values(tally));
   const topCandidates = Object.keys(tally).filter(p => tally[p] === maxVotes);
+  const eliminated = topCandidates.length === 1 ? topCandidates[0] : null;
 
-  const eliminated = topCandidates.length === 1 ? topCandidates[0] : null; // tie = no elimination
-
-  // Build vote bars
   const barsContainer = document.getElementById('vote-results-bars');
   barsContainer.innerHTML = '';
   const sortedPlayers = [...state.players].sort((a, b) => tally[b] - tally[a]);
-  const total = state.players.length - 1; // max votes possible
+  const total = state.players.length - 1;
 
   sortedPlayers.forEach(p => {
     const row = document.createElement('div');
@@ -925,7 +994,6 @@ function revealVotes() {
     barsContainer.appendChild(row);
   });
 
-  // Elimination announcement
   const elimEl = document.getElementById('eliminated-announcement');
   if (eliminated) {
     elimEl.innerHTML = `<strong>${eliminated}</strong> was eliminated by vote!`;
@@ -933,14 +1001,12 @@ function revealVotes() {
     elimEl.innerHTML = `🤝 It's a tie — nobody eliminated!`;
   }
 
-  // Show impostor guess if impostor was eliminated
   const impostorEliminated = eliminated && state.impostors.includes(eliminated);
   const guessSection = document.getElementById('impostor-guess-section');
 
   if (impostorEliminated) {
     guessSection.style.display = 'block';
-    guessSection.querySelector('h3').textContent =
-      `🎯 ${eliminated}'s Last Chance!`;
+    document.getElementById('guess-box-title').textContent = `🎯 ${eliminated}'s Last Chance!`;
     document.getElementById('impostor-guess-input').value = '';
   } else {
     guessSection.style.display = 'none';
@@ -962,7 +1028,6 @@ function submitImpostorGuess() {
 }
 
 function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
-  const crewWin = impostorCaught && !impostorGuessedCorrect;
   const impostorWin = !impostorCaught || impostorGuessedCorrect;
 
   const resultCard = document.getElementById('round-result-card');
@@ -971,24 +1036,20 @@ function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
   if (impostorWin) {
     document.getElementById('result-icon').textContent = '🎭';
     document.getElementById('result-title').textContent = 'Impostors Win!';
-    if (impostorGuessedCorrect) {
-      document.getElementById('result-sub').textContent = 'They guessed the word correctly — sneaky!';
-    } else if (!eliminated || !state.impostors.includes(eliminated)) {
-      document.getElementById('result-sub').textContent = 'The impostors blended in perfectly.';
-    }
+    document.getElementById('result-sub').textContent = impostorGuessedCorrect
+      ? 'They guessed the word — sneaky comeback!'
+      : 'The impostors blended in perfectly.';
     state.impostors.forEach(imp => state.scores[imp] = (state.scores[imp] || 0) + 2);
   } else {
     document.getElementById('result-icon').textContent = '🕵️';
     document.getElementById('result-title').textContent = 'Crewmates Win!';
     document.getElementById('result-sub').textContent = 'The impostor was unmasked!';
-    state.players.filter(p => !state.impostors.includes(p)).forEach(p => {
-      state.scores[p] = (state.scores[p] || 0) + 2;
-    });
+    state.players.filter(p => !state.impostors.includes(p))
+      .forEach(p => state.scores[p] = (state.scores[p] || 0) + 2);
   }
 
-  // Reveal word
-  const revealCard = document.getElementById('reveal-word-card');
-  revealCard.style.display = 'block';
+  document.getElementById('reveal-word-card').style.display = 'block';
+  document.getElementById('revealed-category').textContent = `${state.category.emoji} ${state.category.name}`;
   document.getElementById('revealed-secret-word').textContent = state.word;
   document.getElementById('revealed-impostors').textContent = state.impostors.join(', ');
 
@@ -996,6 +1057,8 @@ function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
 
   if (state.currentRound >= state.totalRounds) {
     document.getElementById('next-round-btn').style.display = 'none';
+    // Show final after short delay
+    setTimeout(showFinalResults, 100);
   } else {
     document.getElementById('next-round-btn').style.display = 'block';
     document.getElementById('next-round-btn').textContent = `▶️ Round ${state.currentRound + 1}`;
@@ -1003,11 +1066,7 @@ function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
 }
 
 function nextRound() {
-  if (state.currentRound >= state.totalRounds) {
-    showFinalResults();
-  } else {
-    startRound();
-  }
+  startRound();
 }
 
 function showFinalResults() {
@@ -1034,8 +1093,11 @@ function resetToSetup() {
   state.players = [];
   state.scores = {};
   state.currentRound = 0;
+  state.selectedCategory = null;
+  state.customWord = '';
   document.getElementById('custom-word').value = '';
   renderPlayers();
+  renderCategories();
   showScreen('setup');
 }
 </script>
