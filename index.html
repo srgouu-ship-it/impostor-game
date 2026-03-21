@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Impostor Game 🕵️</title>
+  <title>Impostor 🕵️</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,7 +15,6 @@
       --accent2: #a855f7;
       --red: #ef4444;
       --green: #22c55e;
-      --yellow: #eab308;
       --text: #e2e8f0;
       --muted: #64748b;
       --border: #2d2d40;
@@ -43,12 +42,7 @@
       text-align: center;
     }
 
-    .subtitle {
-      color: var(--muted);
-      font-size: 0.9rem;
-      text-align: center;
-      margin-bottom: 32px;
-    }
+    .subtitle { color: var(--muted); font-size: 0.9rem; text-align: center; margin-bottom: 32px; }
 
     .card {
       background: var(--surface);
@@ -60,21 +54,11 @@
       margin-bottom: 20px;
     }
 
-    .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      color: var(--accent2);
-    }
+    .card h2 { font-size: 1.1rem; margin-bottom: 16px; color: var(--accent2); }
 
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      margin-top: 14px;
-    }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; margin-top: 14px; }
 
-    input, textarea, select {
+    input, select {
       width: 100%;
       background: var(--surface2);
       border: 1px solid var(--border);
@@ -85,12 +69,7 @@
       outline: none;
       transition: border-color 0.2s;
     }
-
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--accent);
-    }
-
-    textarea { resize: vertical; min-height: 80px; }
+    input:focus, select:focus { border-color: var(--accent); }
 
     .btn {
       display: inline-flex;
@@ -109,84 +88,34 @@
       width: 100%;
       margin-top: 16px;
     }
-
     .btn:hover { background: var(--accent2); }
     .btn:active { transform: scale(0.97); }
-    .btn.red { background: var(--red); }
-    .btn.red:hover { background: #dc2626; }
-    .btn.green { background: var(--green); color: #000; }
-    .btn.green:hover { background: #16a34a; color: #fff; }
-    .btn.ghost {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
+    .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
     .btn.ghost:hover { border-color: var(--accent2); }
-    .btn.small { padding: 8px 16px; font-size: 0.85rem; margin-top: 8px; width: auto; }
 
     .screen { display: none; }
     .screen.active { display: block; width: 100%; max-width: 480px; }
 
-    /* Setup */
+    /* Player list */
     .player-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
     .player-tag {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 14px;
-      font-size: 0.95rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 8px 14px; font-size: 0.95rem;
     }
-
-    .player-tag .remove-btn {
-      background: none;
-      border: none;
-      color: var(--red);
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0;
-      line-height: 1;
-    }
-
-    .add-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
+    .player-tag .remove-btn { background: none; border: none; color: var(--red); cursor: pointer; font-size: 1rem; }
+    .add-row { display: flex; gap: 8px; margin-top: 8px; }
     .add-row input { flex: 1; margin: 0; }
-    .add-row button {
-      background: var(--accent);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 1.2rem;
-      padding: 8px 14px;
-      cursor: pointer;
-    }
+    .add-row button { background: var(--accent); border: none; border-radius: 10px; color: #fff; font-size: 1.2rem; padding: 8px 14px; cursor: pointer; }
 
     /* Category grid */
-    .category-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
+    .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
     .cat-btn {
-      background: var(--surface2);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      padding: 12px 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-align: center;
+      background: var(--surface2); border: 2px solid var(--border);
+      border-radius: 12px; color: var(--text); padding: 12px 10px;
+      font-size: 0.9rem; cursor: pointer; text-align: center;
       transition: border-color 0.2s, background 0.2s;
     }
-
     .cat-btn:hover { border-color: var(--accent); }
     .cat-btn.selected { border-color: var(--accent2); background: rgba(168,85,247,0.15); }
     .cat-btn .cat-emoji { font-size: 1.4rem; display: block; margin-bottom: 4px; }
@@ -194,397 +123,252 @@
     .cat-btn .cat-desc { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
 
     .category-banner {
-      background: rgba(168,85,247,0.12);
-      border: 1px solid var(--accent);
-      border-radius: 12px;
-      padding: 12px 16px;
-      text-align: center;
-      margin-bottom: 16px;
+      background: rgba(168,85,247,0.12); border: 1px solid var(--accent);
+      border-radius: 12px; padding: 12px 16px; text-align: center; margin-bottom: 16px;
     }
-
     .category-banner .cat-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; }
     .category-banner .cat-value { font-size: 1.1rem; font-weight: 700; color: var(--accent2); }
 
-    /* Role reveal screen */
-    .big-name {
-      font-size: 2.5rem;
-      font-weight: 700;
+    /* Hint box for impostor */
+    .hint-box {
+      background: rgba(234, 179, 8, 0.1);
+      border: 1px solid #eab308;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-top: 12px;
       text-align: center;
-      margin: 16px 0 8px;
     }
+    .hint-box .hint-label { font-size: 0.72rem; color: #eab308; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .hint-box .hint-text { font-size: 0.95rem; color: var(--text); }
 
+    /* Reveal */
+    .big-name { font-size: 2.5rem; font-weight: 700; text-align: center; margin: 16px 0 8px; }
     .role-box {
-      background: var(--surface2);
-      border-radius: var(--radius);
-      padding: 30px 24px;
-      text-align: center;
-      margin: 16px 0;
-      cursor: pointer;
-      user-select: none;
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 30px 24px; text-align: center; margin: 16px 0;
+      cursor: pointer; user-select: none;
     }
-
-    .role-box .tap-hint {
-      color: var(--muted);
-      font-size: 0.85rem;
-      margin-bottom: 16px;
-    }
-
+    .role-box .tap-hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 16px; }
     .role-secret { display: none; }
     .role-secret.shown { display: block; }
-
-    .word-display {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin: 8px 0;
-      color: var(--accent2);
-    }
-
+    .word-display { font-size: 2.2rem; font-weight: 800; letter-spacing: 2px; margin: 8px 0; color: var(--accent2); }
     .role-badge {
-      display: inline-block;
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-top: 8px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      display: inline-block; padding: 4px 14px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 600; margin-top: 8px;
+      letter-spacing: 1px; text-transform: uppercase;
     }
-
     .role-badge.crewmate { background: var(--green); color: #000; }
     .role-badge.impostor { background: var(--red); }
+    .cover-screen { background: var(--surface2); border-radius: var(--radius); padding: 30px 24px; text-align: center; }
 
-    .cover-screen {
-      background: var(--surface2);
-      border-radius: var(--radius);
-      padding: 30px 24px;
-      text-align: center;
-    }
+    .progress-dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 16px; }
+    .progress-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .progress-dots .dot.done { background: var(--accent2); }
+    .progress-dots .dot.active { background: var(--accent); }
 
-    .cover-screen .cover-icon {
-      font-size: 3rem;
-      display: block;
-      margin-bottom: 8px;
-    }
+    /* Round */
+    .round-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .round-badge { background: var(--accent); color: #fff; border-radius: 8px; padding: 4px 12px; font-size: 0.85rem; font-weight: 600; }
+    .current-player-display { text-align: center; margin: 16px 0; }
+    .current-player-display .cue { font-size: 0.9rem; color: var(--muted); margin-bottom: 4px; }
+    .current-player-display .name { font-size: 1.8rem; font-weight: 700; color: var(--accent2); }
 
-    /* Round screen */
-    .round-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .round-badge {
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      padding: 4px 12px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .current-player-display {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .current-player-display .cue {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .current-player-display .name {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--accent2);
-    }
-
-    .clues-log {
-      background: var(--surface2);
-      border-radius: 12px;
-      padding: 14px;
-      margin: 16px 0;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .clues-log .clue-row {
-      display: flex;
-      gap: 10px;
-      align-items: baseline;
-      padding: 4px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
-    }
-
-    .clues-log .clue-row:last-child { border-bottom: none; }
+    .clues-log { background: var(--surface2); border-radius: 12px; padding: 14px; margin: 12px 0; max-height: 200px; overflow-y: auto; }
+    .clue-row { display: flex; gap: 10px; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .clue-row:last-child { border-bottom: none; }
     .clue-player { color: var(--muted); width: 100px; flex-shrink: 0; }
     .clue-word { color: var(--text); font-weight: 600; }
-
-    .clue-input-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
+    .clue-input-row { display: flex; gap: 8px; margin-top: 12px; }
     .clue-input-row input { flex: 1; margin: 0; }
-    .clue-input-row button {
-      background: var(--accent);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-weight: 700;
-      padding: 10px 18px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
+    .clue-input-row button { background: var(--accent); border: none; border-radius: 10px; color: #fff; font-weight: 700; padding: 10px 18px; cursor: pointer; font-size: 1rem; }
 
-    /* Vote screen */
+    /* Vote */
     .vote-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
     .vote-btn {
-      background: var(--surface2);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      padding: 14px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-align: left;
+      background: var(--surface2); border: 2px solid var(--border);
+      border-radius: 12px; color: var(--text); padding: 14px 20px;
+      font-size: 1rem; cursor: pointer; text-align: left;
       transition: border-color 0.2s, background 0.2s;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
-
     .vote-btn:hover { border-color: var(--accent); }
-    .vote-btn.selected { border-color: var(--accent); background: rgba(124, 58, 237, 0.15); }
+    .vote-btn.selected { border-color: var(--accent); background: rgba(124,58,237,0.15); }
 
-    /* Results screen */
-    .result-card {
-      background: var(--surface2);
-      border-radius: var(--radius);
-      padding: 24px;
-      text-align: center;
-      margin: 16px 0;
-    }
-
+    /* Results */
+    .result-card { background: var(--surface2); border-radius: var(--radius); padding: 24px; text-align: center; margin: 16px 0; }
     .result-icon { font-size: 4rem; margin-bottom: 8px; }
     .result-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
     .result-sub { color: var(--muted); font-size: 0.9rem; }
 
-    .vote-results {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin: 16px 0;
-    }
-
-    .vote-result-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .vote-result-row .vr-name { width: 110px; font-size: 0.9rem; flex-shrink: 0; }
-    .vote-result-row .vr-bar-wrap { flex: 1; background: var(--surface2); border-radius: 6px; height: 16px; overflow: hidden; }
-    .vote-result-row .vr-bar { height: 100%; background: var(--accent); border-radius: 6px; transition: width 0.6s ease; }
-    .vote-result-row .vr-bar.top { background: var(--red); }
-    .vote-result-row .vr-count { font-size: 0.8rem; color: var(--muted); width: 20px; text-align: right; }
-
+    .vote-results { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+    .vote-result-row { display: flex; align-items: center; gap: 10px; }
+    .vr-name { width: 110px; font-size: 0.9rem; flex-shrink: 0; }
+    .vr-bar-wrap { flex: 1; background: var(--surface2); border-radius: 6px; height: 16px; overflow: hidden; }
+    .vr-bar { height: 100%; background: var(--accent); border-radius: 6px; transition: width 0.6s ease; }
+    .vr-bar.top { background: var(--red); }
+    .vr-count { font-size: 0.8rem; color: var(--muted); width: 20px; text-align: right; }
     .tag-impostor { color: var(--red); font-size: 0.75rem; font-weight: 600; }
 
-    .progress-dots {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin-top: 8px;
-    }
-
-    .progress-dots .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-    }
-
-    .progress-dots .dot.done { background: var(--accent2); }
-    .progress-dots .dot.active { background: var(--accent); }
-
-    .impostor-guess-box {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid var(--red);
-      border-radius: 12px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-
+    .impostor-guess-box { background: rgba(239,68,68,0.1); border: 1px solid var(--red); border-radius: 12px; padding: 16px; margin: 16px 0; }
     .impostor-guess-box h3 { color: var(--red); font-size: 0.95rem; margin-bottom: 10px; }
-
-    .impostor-guess-box .guess-row { display: flex; gap: 8px; }
-    .impostor-guess-box input { flex: 1; margin: 0; }
-    .impostor-guess-box button {
-      background: var(--red);
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-weight: 700;
-      padding: 10px 18px;
-      cursor: pointer;
-    }
+    .guess-row { display: flex; gap: 8px; }
+    .guess-row input { flex: 1; margin: 0; }
+    .guess-row button { background: var(--red); border: none; border-radius: 10px; color: #fff; font-weight: 700; padding: 10px 18px; cursor: pointer; }
 
     @media (max-width: 400px) {
       h1 { font-size: 1.5rem; }
       .big-name { font-size: 1.8rem; }
       .word-display { font-size: 1.6rem; }
-      .category-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
 <h1>🕵️ Impostor</h1>
-<p class="subtitle">One of you doesn't know the word. Find them.</p>
+<p class="subtitle">Jedan od vas ne zna reč. Pronađite ga.</p>
 
-<!-- ============ SETUP SCREEN ============ -->
+<!-- ====== SETUP ====== -->
 <div id="screen-setup" class="screen active">
   <div class="card">
-    <h2>👥 Players</h2>
+    <h2>👥 Igrači</h2>
     <div id="player-list" class="player-list"></div>
     <div class="add-row">
-      <input id="new-player-input" type="text" placeholder="Player name..." maxlength="20" />
+      <input id="new-player-input" type="text" placeholder="Ime igrača..." maxlength="20" />
       <button onclick="addPlayer()">+</button>
     </div>
   </div>
 
   <div class="card">
-    <h2>📂 Category</h2>
-    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">Everyone will know the category — the impostor uses it to fake their clues.</p>
+    <h2>📂 Kategorija</h2>
+    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">Svi znaju kategoriju — impostor je koristi da blendira.</p>
     <div class="category-grid" id="category-grid"></div>
     <div style="margin-top:14px;">
-      <label>Or type a custom word (optional)</label>
-      <input id="custom-word" type="text" placeholder="e.g. Espresso, Kilimanjaro..." maxlength="30" />
-      <p style="font-size:0.75rem; color:var(--muted); margin-top:4px;">If filled, overrides the random pick from selected category.</p>
+      <label>Ili unesi svoju reč (opciono)</label>
+      <input id="custom-word" type="text" placeholder="npr. Kafa, Beograd, Gitara..." maxlength="30" />
+      <p style="font-size:0.75rem; color:var(--muted); margin-top:4px;">Ako je unesena, koristi se umesto nasumične reči iz kategorije.</p>
     </div>
   </div>
 
   <div class="card">
-    <h2>⚙️ Game Settings</h2>
-    <label>Number of Impostors</label>
+    <h2>⚙️ Podešavanja</h2>
+    <label>Broj impostora</label>
     <select id="impostor-count">
       <option value="1">1 Impostor</option>
-      <option value="2">2 Impostors</option>
+      <option value="2">2 Impostora</option>
     </select>
-    <label>Rounds per Game</label>
+    <label>Broj rundi</label>
     <select id="round-count">
-      <option value="1">1 Round</option>
-      <option value="2">2 Rounds</option>
-      <option value="3" selected>3 Rounds</option>
+      <option value="1">1 Runda</option>
+      <option value="2">2 Runde</option>
+      <option value="3" selected>3 Runde</option>
     </select>
   </div>
 
-  <button class="btn" onclick="startGame()">🎮 Start Game</button>
+  <button class="btn" onclick="startGame()">🎮 Pokreni igru</button>
 </div>
 
-<!-- ============ REVEAL SCREEN ============ -->
+<!-- ====== REVEAL ====== -->
 <div id="screen-reveal" class="screen">
   <div class="card">
     <div id="reveal-progress" class="progress-dots"></div>
 
     <div id="reveal-cover" class="cover-screen">
-      <span class="cover-icon">📵</span>
-      <p style="font-weight:600; font-size:1.1rem;">Pass the phone to</p>
+      <span style="font-size:3rem; display:block; margin-bottom:8px;">📵</span>
+      <p style="font-weight:600; font-size:1.1rem;">Dodaj telefon igraču:</p>
       <div id="reveal-player-name" class="big-name"></div>
-      <p style="color:var(--muted); font-size:0.85rem;">Make sure others can't see!</p>
+      <p style="color:var(--muted); font-size:0.85rem;">Drugi ne smeju da gledaju!</p>
     </div>
 
     <div id="reveal-role" style="display:none;">
-      <!-- Category always visible -->
       <div class="category-banner">
-        <div class="cat-label">CATEGORY (everyone knows this)</div>
+        <div class="cat-label">KATEGORIJA (svi znaju ovo)</div>
         <div class="cat-value" id="reveal-category-name"></div>
       </div>
 
       <div class="role-box" id="role-tap-box" onclick="toggleWordReveal()">
-        <p class="tap-hint">👆 Tap to see your word</p>
+        <p class="tap-hint">👆 Tapni da vidiš svoju reč</p>
         <div class="role-secret" id="role-secret-content">
           <div class="word-display" id="reveal-word"></div>
           <div id="reveal-badge"></div>
-          <p style="color:var(--muted); font-size:0.8rem; margin-top:12px;">Remember it, then cover the screen!</p>
+          <p style="color:var(--muted); font-size:0.8rem; margin-top:12px;">Zapamti reč, pa sakrij ekran!</p>
         </div>
       </div>
-      <button class="btn ghost" onclick="nextReveal()">✅ Done, pass to next player</button>
+
+      <div id="impostor-hint-box" class="hint-box" style="display:none;">
+        <div class="hint-label">💡 Tvoj hint (samo ti vidiš ovo)</div>
+        <div class="hint-text" id="impostor-hint-text"></div>
+      </div>
+
+      <button class="btn ghost" onclick="nextReveal()">✅ Gotovo, dodaj sledećem</button>
     </div>
   </div>
 </div>
 
-<!-- ============ ROUND SCREEN ============ -->
+<!-- ====== ROUND ====== -->
 <div id="screen-round" class="screen">
   <div class="card">
     <div class="round-header">
       <div>
-        <div style="font-size:0.8rem; color:var(--muted);">Round</div>
+        <div style="font-size:0.8rem; color:var(--muted);">Runda</div>
         <div style="font-size:1.3rem; font-weight:700;" id="round-display"></div>
       </div>
       <span class="round-badge" id="round-turn-display"></span>
     </div>
 
-    <!-- Category reminder visible during play -->
     <div class="category-banner" id="round-category-banner"></div>
 
     <div class="current-player-display">
-      <div class="cue">It's your turn:</div>
+      <div class="cue">Na redu je:</div>
       <div class="name" id="current-player-name"></div>
-      <div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">Give ONE word/phrase as a clue</div>
+      <div style="color:var(--muted); font-size:0.85rem; margin-top:4px;">Daj JEDNU reč kao nagoveštaj</div>
     </div>
 
     <div class="clues-log" id="clues-log">
-      <div style="color:var(--muted); font-size:0.85rem; text-align:center;">No clues yet...</div>
+      <div style="color:var(--muted); font-size:0.85rem; text-align:center;">Nema nagoveštaja još...</div>
     </div>
 
     <div class="clue-input-row">
-      <input id="clue-input" type="text" placeholder="Your clue..." maxlength="30"
+      <input id="clue-input" type="text" placeholder="Tvoj nagoveštaj..." maxlength="30"
         onkeydown="if(event.key==='Enter')submitClue()" />
       <button onclick="submitClue()">→</button>
     </div>
   </div>
 
-  <button class="btn ghost" onclick="proceedToVote()" id="vote-now-btn" style="display:none;">🗳️ Skip to Vote</button>
+  <button class="btn ghost" onclick="proceedToVote()" id="vote-now-btn" style="display:none;">🗳️ Preskoči na glasanje</button>
 </div>
 
-<!-- ============ VOTE SCREEN ============ -->
+<!-- ====== VOTE ====== -->
 <div id="screen-vote" class="screen">
   <div class="card">
-    <h2>🗳️ Who's the Impostor?</h2>
-    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:16px;">Discuss, then each person votes privately.</p>
+    <h2>🗳️ Ko je impostor?</h2>
+    <p style="color:var(--muted); font-size:0.85rem; margin-bottom:16px;">Diskutujte, pa svako glasá privatno.</p>
     <div id="vote-pending-label" style="font-size:0.85rem; color:var(--muted); margin-bottom:8px;"></div>
     <div id="vote-list" class="vote-list"></div>
     <div id="vote-confirm" style="display:none; margin-top:16px;">
-      <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Voting: <strong id="current-voter-name"></strong></p>
-      <button class="btn" onclick="confirmVote()">✅ Confirm Vote</button>
+      <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Glasanje: <strong id="current-voter-name"></strong></p>
+      <button class="btn" onclick="confirmVote()">✅ Potvrdi glas</button>
     </div>
     <div id="vote-submit-wrap" style="display:none;">
-      <button class="btn" onclick="revealVotes()">🔍 Reveal Votes</button>
+      <button class="btn" onclick="revealVotes()">🔍 Otkrij glasove</button>
     </div>
   </div>
 </div>
 
-<!-- ============ RESULTS SCREEN ============ -->
+<!-- ====== RESULTS ====== -->
 <div id="screen-results" class="screen">
   <div class="card">
-    <h2>📊 Vote Results</h2>
+    <h2>📊 Rezultati glasanja</h2>
     <div id="vote-results-bars" class="vote-results"></div>
     <div id="eliminated-announcement" style="text-align:center; margin:16px 0; font-size:1rem;"></div>
   </div>
 
   <div id="impostor-guess-section" class="card" style="display:none;">
     <div class="impostor-guess-box">
-      <h3 id="guess-box-title">🎯 Impostor's Last Chance!</h3>
+      <h3 id="guess-box-title">🎯 Impostorova poslednja šansa!</h3>
       <p style="font-size:0.85rem; color:var(--muted); margin-bottom:10px;">
-        Caught — but guess the exact word to steal the win!
+        Uhvaćen — ali ako pogodite reč, kradete pobedu!
       </p>
       <div class="guess-row">
-        <input id="impostor-guess-input" type="text" placeholder="What's the word?" maxlength="30"
+        <input id="impostor-guess-input" type="text" placeholder="Koja je reč?" maxlength="30"
           onkeydown="if(event.key==='Enter')submitImpostorGuess()" />
         <button onclick="submitImpostorGuess()">🎯</button>
       </div>
@@ -598,112 +382,250 @@
   </div>
 
   <div id="reveal-word-card" class="card" style="display:none; text-align:center;">
-    <p style="color:var(--muted); font-size:0.85rem;">Category: <strong id="revealed-category"></strong></p>
-    <p style="color:var(--muted); font-size:0.85rem; margin-top:4px;">The secret word was:</p>
+    <p style="color:var(--muted); font-size:0.85rem;">Kategorija: <strong id="revealed-category"></strong></p>
+    <p style="color:var(--muted); font-size:0.85rem; margin-top:4px;">Tajna reč je bila:</p>
     <div class="word-display" id="revealed-secret-word"></div>
-    <p style="color:var(--muted); font-size:0.85rem; margin-top:8px;">Impostors: <strong id="revealed-impostors"></strong></p>
+    <p style="color:var(--muted); font-size:0.85rem; margin-top:8px;">Impostori: <strong id="revealed-impostors"></strong></p>
   </div>
 
   <div id="results-buttons" style="display:none;">
-    <button class="btn" id="next-round-btn" onclick="nextRound()">▶️ Next Round</button>
-    <button class="btn ghost" style="margin-top:8px;" onclick="resetToSetup()">🔄 New Game</button>
+    <button class="btn" id="next-round-btn" onclick="nextRound()">▶️ Sledeća runda</button>
+    <button class="btn ghost" style="margin-top:8px;" onclick="resetToSetup()">🔄 Nova igra</button>
   </div>
 
   <div id="final-result-card" class="card" style="display:none; text-align:center;">
-    <h2 style="margin-bottom:16px;">🏁 Game Over</h2>
+    <h2 style="margin-bottom:16px;">🏁 Kraj igre!</h2>
     <div id="scoreboard"></div>
-    <button class="btn" style="margin-top:16px;" onclick="resetToSetup()">🔄 Play Again</button>
+    <button class="btn" style="margin-top:16px;" onclick="resetToSetup()">🔄 Igraj ponovo</button>
   </div>
 </div>
 
 <script>
-// ===================== WORD BANK BY CATEGORY =====================
+// ===================== WORD BANK =====================
 const CATEGORIES = [
   {
-    id: "food",
-    emoji: "🍕",
-    name: "Food & Drinks",
-    desc: "What you eat & drink",
-    words: ["Espresso", "Sushi", "Croissant", "Taco", "Tiramisu", "Smoothie", "Ramen", "Fondue", "Guacamole", "Lasagna", "Churro", "Dumplings", "Baklava", "Nachos", "Risotto"]
+    id: "food", emoji: "🍕", name: "Hrana i piće", desc: "Jela i pića",
+    words: [
+      { w: "Espreso",    h: "Topli napitak koji se pije u malim gutljajima" },
+      { w: "Suši",       h: "Jelo koje dolazi u rolovanim komadima" },
+      { w: "Kroasan",    h: "Pekarski proizvod polumesečastog oblika" },
+      { w: "Taco",       h: "Meksičko jelo u savijenom hlebu" },
+      { w: "Tiramisu",   h: "Desert od kafe i maskarpone sira" },
+      { w: "Smuti",      h: "Tečno piće od voća u blenderu" },
+      { w: "Ramen",      h: "Japanska supa sa rezancima" },
+      { w: "Guakamole",  h: "Namaz od avokada" },
+      { w: "Lazanje",    h: "Italijansko jelo sa slojevima testa" },
+      { w: "Čurос",      h: "Prženo testo posuto šećerom" },
+      { w: "Knedle",     h: "Punjene loptice od testa" },
+      { w: "Baklava",    h: "Slatki desert od tankog testa i oraha" },
+      { w: "Načos",      h: "Hrskavi kukuruzni čips sa umakom" },
+      { w: "Rizoto",     h: "Kremasto jelo od pirinča" },
+      { w: "Fondi",      h: "Jelo gde se hrana umaće u vrući sir ili čokoladu" },
+    ]
   },
   {
-    id: "nature",
-    emoji: "🌍",
-    name: "Nature & Places",
-    desc: "Earth, geography, wild",
-    words: ["Volcano", "Glacier", "Rainforest", "Canyon", "Avalanche", "Quicksand", "Lagoon", "Tundra", "Waterfall", "Desert", "Coral Reef", "Geyser", "Mangrove", "Fjord", "Savanna"]
+    id: "nature", emoji: "🌍", name: "Priroda i mesta", desc: "Zemlja, geografija",
+    words: [
+      { w: "Vulkan",     h: "Planina iz koje može da izbije lava" },
+      { w: "Glečer",     h: "Ogromna masa leda koja se sporo kreće" },
+      { w: "Prašuma",    h: "Gusta šuma sa stalnom vlagom" },
+      { w: "Kanjon",     h: "Duboka dolina isklesana rekom" },
+      { w: "Lavina",     h: "Masa snega koja se sruši niz planinu" },
+      { w: "Laguna",     h: "Plitko more odvojeno od okeanа" },
+      { w: "Tundra",     h: "Ledena ravnica bez drveća" },
+      { w: "Vodopad",    h: "Voda koja pada sa visine" },
+      { w: "Pustinja",   h: "Suvo područje s malo kiše i peska" },
+      { w: "Gejzir",     h: "Vreo vodeni stub koji šiklja iz zemlje" },
+      { w: "Fjord",      h: "Uski morski zaliv između strmih litica" },
+      { w: "Savana",     h: "Afrička ravnica sa retkim drvejem" },
+      { w: "Koralski greben", h: "Podvodni ekosistem od živih organizama" },
+      { w: "Stalagmit",  h: "Kameni šiljak koji raste od poda pećine" },
+      { w: "Monsun",     h: "Sezonski veter koji donosi obilne kiše" },
+    ]
   },
   {
-    id: "objects",
-    emoji: "🎸",
-    name: "Objects & Things",
-    desc: "Everyday stuff",
-    words: ["Guitar", "Compass", "Telescope", "Scissors", "Hourglass", "Lantern", "Suitcase", "Umbrella", "Boomerang", "Periscope", "Kaleidoscope", "Sundial", "Hammock", "Marionette", "Cobweb"]
+    id: "objects", emoji: "🎸", name: "Predmeti i stvari", desc: "Svakodnevne stvari",
+    words: [
+      { w: "Gitara",     h: "Instrument sa žicama koji se svira prstima" },
+      { w: "Kompas",     h: "Uređaj koji uvek pokazuje sever" },
+      { w: "Teleskop",   h: "Optički instrument za posmatranje zvezda" },
+      { w: "Makaze",     h: "Alat sa dve oštrice za sečenje" },
+      { w: "Peščanik",   h: "Meri vreme pomoću peska" },
+      { w: "Fenjer",     h: "Prenosni izvor svetlosti" },
+      { w: "Kofer",      h: "Nosi se na putovanju i pakuje odeća" },
+      { w: "Kišobran",   h: "Štiti od kiše kada se otvori" },
+      { w: "Bumerang",   h: "Baca se i vraća nazad" },
+      { w: "Periskop",   h: "Omogućava gledanje iz skrivenog položaja" },
+      { w: "Kalejdoskop", h: "Cevi sa ogledalima koja prave šarene slike" },
+      { w: "Sunčani sat", h: "Starinski sat koji koristi senku sunca" },
+      { w: "Ležaljka",   h: "Viseći namještaj za odmor napolju" },
+      { w: "Marioneta",  h: "Lutka koja se pokreće koncem" },
+      { w: "Kandža",     h: "Oštri zakrivljeni nokat životinje" },
+    ]
   },
   {
-    id: "animals",
-    emoji: "🐘",
-    name: "Animals",
-    desc: "Creatures big & small",
-    words: ["Elephant", "Platypus", "Chameleon", "Narwhal", "Axolotl", "Flamingo", "Pangolin", "Mantis", "Capybara", "Meerkat", "Tapir", "Okapi", "Kiwi", "Wombat", "Blobfish"]
+    id: "animals", emoji: "🐘", name: "Životinje", desc: "Bića velika i mala",
+    words: [
+      { w: "Slon",       h: "Najveća kopnena životinja sa surlom" },
+      { w: "Plajtipus",  h: "Sisар koji liže jaja i ima kljun" },
+      { w: "Kameleon",   h: "Gušter koji menja boju kože" },
+      { w: "Narval",     h: "Morska životinja s jednim dugim rogom" },
+      { w: "Aksolotl",   h: "Vodena životinja koja se nikad ne pretvara u odraslu" },
+      { w: "Flamingo",   h: "Ružičasta ptica koja stoji na jednoj nozi" },
+      { w: "Pangolin",   h: "Jedini sisар prekriven krljuštima" },
+      { w: "Kapibara",   h: "Najveći glodаr na svetu" },
+      { w: "Surkat",     h: "Mali sisар koji stoji uspravno i čuva straže" },
+      { w: "Tapir",      h: "Životinja sličnih nosorogu s kratkom surlom" },
+      { w: "Okapi",      h: "Životinja koja liči na križ između žirafe i zebre" },
+      { w: "Vombat",     h: "Torbар koji kopa hodnike i živi u Australiji" },
+      { w: "Blobriба",   h: "Dubokomorska riba sa flegmatičnim izrazom lica" },
+      { w: "Mantis",     h: "Insekt koji sklopljenih ruku čeka plijen" },
+      { w: "Kivi",       h: "Ptica koja ne leti i ima dugi kljun" },
+    ]
   },
   {
-    id: "entertainment",
-    emoji: "🎭",
-    name: "Movies & Pop Culture",
-    desc: "Film, music, games",
-    words: ["Titanic", "Minecraft", "Superman", "Karaoke", "Carnival", "Circus", "Broadway", "Podcast", "Cosplay", "Marathon", "Fireworks", "Arcade", "Rollercoaster", "Karate", "Ballet"]
+    id: "entertainment", emoji: "🎭", name: "Film i zabava", desc: "Film, muzika, igre",
+    words: [
+      { w: "Titanik",    h: "Čuveni brod koji se srušio u ledeno more" },
+      { w: "Minecraft",  h: "Video igra gde se gradi od kockica" },
+      { w: "Superman",   h: "Junak koji leti i ima ogrtač" },
+      { w: "Karaoke",    h: "Pevanje uz tekst na ekranu" },
+      { w: "Karneval",   h: "Šarena ulična proslava s maskama" },
+      { w: "Cirkus",     h: "Zabavna priredba sa akrobatama i životinjama" },
+      { w: "Brodvej",    h: "Poznata ulica s pozorišnim mjuziklima" },
+      { w: "Kosplej",    h: "Oblačenje u lik iz filma ili igre" },
+      { w: "Maraton",    h: "Trka od 42 kilometra" },
+      { w: "Vatromet",   h: "Šarene eksplozije na nebu" },
+      { w: "Arkada",     h: "Sala s retro video igrama na žetone" },
+      { w: "Tobogan",    h: "Atrakcija gde se brzo spušta po putanji" },
+      { w: "Karate",     h: "Borilačka vještina s pokretima i pojasevima" },
+      { w: "Balet",      h: "Plesna umetnost na vrhovima prstiju" },
+      { w: "Podcast",    h: "Audio emisija koja se slusa online" },
+    ]
   },
   {
-    id: "science",
-    emoji: "🔬",
-    name: "Science & Tech",
-    desc: "Nerdy stuff",
-    words: ["Robot", "Black Hole", "Quantum", "Supernova", "DNA", "Laser", "Submarine", "Satellite", "Algorithm", "Asteroid", "Wormhole", "Transistor", "Hologram", "Neuron", "Prism"]
+    id: "science", emoji: "🔬", name: "Nauka i tech", desc: "Nauka i tehnologija",
+    words: [
+      { w: "Robot",      h: "Mašina koja može da obavlja zadatke umesto čoveka" },
+      { w: "Crna rupa",  h: "Kosmički objekat čija gravitacija guta i svetlost" },
+      { w: "DNA",        h: "Molekul koji nosi genetske informacije" },
+      { w: "Laser",      h: "Usmereni snop svetlosti koji može seći" },
+      { w: "Podmornica", h: "Plovilo koje se kreće ispod površine mora" },
+      { w: "Satelit",    h: "Objekt koji kruži oko Zemlje u svemiru" },
+      { w: "Algoritam",  h: "Skup koraka za rešavanje problema" },
+      { w: "Asteroid",   h: "Kamena stena koja leti kroz svemir" },
+      { w: "Hologram",   h: "Trodimenzionalna slika stvorena svetlošću" },
+      { w: "Neuron",     h: "Osnovna ćelija nervnog sistema" },
+      { w: "Prizmu",     h: "Stakleni trougao koji razlaže svetlost na boje" },
+      { w: "Supernova",  h: "Eksplozija zvezde na kraju njenog života" },
+      { w: "Kvantum",    h: "Najmanji mogući paket energije u fizici" },
+      { w: "Tranzistor", h: "Mali elektronski element u svakom čipu" },
+      { w: "Crv rupa",   h: "Hipotetički tunel kroz prostor-vreme" },
+    ]
   },
   {
-    id: "sports",
-    emoji: "⚽",
-    name: "Sports & Games",
-    desc: "Athletic & competitive",
-    words: ["Soccer", "Curling", "Fencing", "Surfing", "Archery", "Bobsled", "Polo", "Judo", "Lacrosse", "Triathlon", "Skateboard", "Snooker", "Darts", "Wrestling", "Rowing"]
+    id: "sports", emoji: "⚽", name: "Sport i igre", desc: "Atletika i takmičenja",
+    words: [
+      { w: "Fudbal",     h: "Tim sport gde se lopta gura nogom u gol" },
+      { w: "Kerling",    h: "Zimski sport guranja kamena po ledu" },
+      { w: "Mačevanje",  h: "Borba sa sabljama ili floretima" },
+      { w: "Surfovanje", h: "Vožnja talasa na dasci" },
+      { w: "Streličarstvo", h: "Sport gađanja lukom i strelom" },
+      { w: "Bobsled",    h: "Saonice koje jure niz ledenu stazu" },
+      { w: "Polo",       h: "Konjanički sport sa maljem i lopticom" },
+      { w: "Džudo",      h: "Borilačka veština bacanja protivnika" },
+      { w: "Bilijar",    h: "Sport štapovima gurajući loptice po stolu" },
+      { w: "Triatlon",   h: "Takmičenje u plivanju, biciklu i trčanju" },
+      { w: "Skejtbord",  h: "Daska s točkovima za klizanje ulicama" },
+      { w: "Pikado",     h: "Bacanje šiljaka u kružnu metu" },
+      { w: "Rvanje",     h: "Borba gde cilj je oboriti protivnika na pod" },
+      { w: "Veslanje",   h: "Sport kretanja čamcem pomoću vesala" },
+      { w: "Lakros",     h: "Tim sport s lopticom i mrežastim štapom" },
+    ]
   },
   {
-    id: "random",
-    emoji: "🎲",
-    name: "Random Mix",
-    desc: "Wild card — anything goes",
-    words: ["Birthday", "Library", "Pyramid", "Labyrinth", "Dungeon", "Lighthouse", "Cathedral", "Dominoes", "Thunderstorm", "Trampoline", "Cactus", "Mitten", "Escalator", "Cobweb", "Fireplace"]
+    id: "random", emoji: "🎲", name: "Mešavina", desc: "Džoker — svašta nešto",
+    words: [
+      { w: "Rođendan",   h: "Godišnjica nečijeg dolaska na svet" },
+      { w: "Biblioteka", h: "Zgrada puna knjiga koje možeš pozajmiti" },
+      { w: "Piramida",   h: "Drevna građevina trouglastog oblika" },
+      { w: "Lavirint",   h: "Mreža hodnika iz koje je teško izaći" },
+      { w: "Tamnica",    h: "Podzemna prostorija za zatvorenike" },
+      { w: "Svetionik",  h: "Toranj s jakim svetlom koji vodi brodove" },
+      { w: "Katedrala",  h: "Velika i stara crkva sa tornjevima" },
+      { w: "Domino",     h: "Igra pločicama koje se ređaju pa obaraju" },
+      { w: "Oluja",      h: "Snažno nevrijeme s grmljavinom i munjom" },
+      { w: "Trampolin",  h: "Elastična površina za skakanje" },
+      { w: "Kaktus",     h: "Pustinjska biljka s bodljama" },
+      { w: "Palanka",    h: "Rukavica za hladne dane" },
+      { w: "Rolstube",   h: "Pokretne stepenice u tržnom centru" },
+      { w: "Pajčina",    h: "Mreža koju pravi pauk" },
+      { w: "Kamin",      h: "Vatralj u zidu kuće za grejanje" },
+    ]
   }
 ];
 
-// ===================== GAME STATE =====================
-let state = {
-  players: [],
-  impostorCount: 1,
-  totalRounds: 3,
-  customWord: "",
-  selectedCategory: null,
-  currentRound: 0,
-  word: "",
-  category: null,
-  impostors: [],
-  revealIndex: 0,
-  clues: [],
-  playerClueIndex: 0,
-  scores: {},
-  votes: {},
-  voterIndex: 0,
-  selectedVote: null,
-};
+// ===================== STATE =====================
+const STORAGE_KEY = 'impostor_game_v2';
 
-// ===================== SCREEN LOGIC =====================
+function defaultState() {
+  return {
+    screen: 'setup',
+    players: [],
+    impostorCount: 1,
+    totalRounds: 3,
+    customWord: '',
+    selectedCategory: null,
+    currentRound: 0,
+    word: '',
+    wordHint: '',
+    category: null,
+    impostors: [],
+    revealIndex: 0,
+    wordShown: false,
+    clues: [],
+    playerClueIndex: 0,
+    scores: {},
+    votes: {},
+    voterIndex: 0,
+    selectedVote: null,
+    voteRevealDone: false,
+    impostorEliminated: null,
+  };
+}
+
+let state = loadState();
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Merge with defaults so new fields don't break old saves
+      return Object.assign(defaultState(), parsed);
+    }
+  } catch(e) {}
+  return defaultState();
+}
+
+function clearState() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  state = defaultState();
+}
+
+// ===================== SCREEN =====================
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + id).classList.add('active');
+  state.screen = id;
+  saveState();
 }
 
-// ===================== CATEGORIES RENDER =====================
+// ===================== CATEGORIES =====================
 function renderCategories() {
   const grid = document.getElementById('category-grid');
   grid.innerHTML = '';
@@ -713,14 +635,14 @@ function renderCategories() {
     btn.innerHTML = `<span class="cat-emoji">${cat.emoji}</span><div class="cat-name">${cat.name}</div><div class="cat-desc">${cat.desc}</div>`;
     btn.onclick = () => {
       state.selectedCategory = cat.id;
-      renderCategories();
       document.getElementById('custom-word').value = '';
+      state.customWord = '';
+      saveState();
+      renderCategories();
     };
     grid.appendChild(btn);
   });
 }
-
-renderCategories();
 
 // ===================== SETUP =====================
 function renderPlayers() {
@@ -738,37 +660,40 @@ function addPlayer() {
   const input = document.getElementById('new-player-input');
   const name = input.value.trim();
   if (!name) return;
-  if (state.players.includes(name)) { alert("Name already exists!"); return; }
-  if (state.players.length >= 12) { alert("Max 12 players!"); return; }
+  if (state.players.includes(name)) { alert("Ime već postoji!"); return; }
+  if (state.players.length >= 12) { alert("Maksimalno 12 igrača!"); return; }
   state.players.push(name);
   input.value = '';
+  saveState();
   renderPlayers();
   input.focus();
 }
 
 function removePlayer(i) {
   state.players.splice(i, 1);
+  saveState();
   renderPlayers();
 }
 
-document.getElementById('new-player-input').addEventListener('keydown', function(e) {
+document.getElementById('new-player-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') addPlayer();
 });
 
+document.getElementById('custom-word').addEventListener('input', e => {
+  state.customWord = e.target.value.trim();
+  saveState();
+});
+
 function startGame() {
-  if (state.players.length < 3) { alert("Need at least 3 players!"); return; }
-  const customWord = document.getElementById('custom-word').value.trim();
-  if (!customWord && !state.selectedCategory) {
-    alert("Please select a category (or enter a custom word)!"); return;
-  }
+  if (state.players.length < 3) { alert("Potrebno je najmanje 3 igrača!"); return; }
+  if (!state.customWord && !state.selectedCategory) { alert("Odaberi kategoriju ili unesi svoju reč!"); return; }
   state.impostorCount = parseInt(document.getElementById('impostor-count').value);
   state.totalRounds = parseInt(document.getElementById('round-count').value);
-  state.customWord = customWord;
-  if (state.impostorCount >= state.players.length) { alert("Too many impostors!"); return; }
-
+  if (state.impostorCount >= state.players.length) { alert("Previše impostora za broj igrača!"); return; }
   state.scores = {};
   state.players.forEach(p => state.scores[p] = 0);
   state.currentRound = 0;
+  saveState();
   startRound();
 }
 
@@ -778,11 +703,13 @@ function startRound() {
 
   if (state.customWord) {
     state.word = state.customWord;
-    state.category = { emoji: '✏️', name: 'Custom Word' };
+    state.wordHint = 'Reč je izabrana ručno od strane domaćina';
+    state.category = { emoji: '✏️', name: 'Vlastita reč' };
   } else {
     const cat = CATEGORIES.find(c => c.id === state.selectedCategory);
-    const words = cat.words;
-    state.word = words[Math.floor(Math.random() * words.length)];
+    const entry = cat.words[Math.floor(Math.random() * cat.words.length)];
+    state.word = entry.w;
+    state.wordHint = entry.h;
     state.category = cat;
   }
 
@@ -791,30 +718,27 @@ function startRound() {
   state.clues = [];
   state.playerClueIndex = 0;
   state.revealIndex = 0;
+  state.wordShown = false;
   state.votes = {};
   state.voterIndex = 0;
   state.selectedVote = null;
+  state.voteRevealDone = false;
+  state.impostorEliminated = null;
 
+  saveState();
   buildRevealProgress();
   showRevealCover(0);
   showScreen('reveal');
 }
 
-// ===================== REVEAL PHASE =====================
+// ===================== REVEAL =====================
 function buildRevealProgress() {
   const dots = document.getElementById('reveal-progress');
   dots.innerHTML = '';
   state.players.forEach((_, i) => {
     const d = document.createElement('div');
-    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.className = 'dot' + (i < state.revealIndex ? ' done' : i === state.revealIndex ? ' active' : '');
     dots.appendChild(d);
-  });
-}
-
-function updateRevealDots(index) {
-  const dots = document.getElementById('reveal-progress').querySelectorAll('.dot');
-  dots.forEach((d, i) => {
-    d.className = 'dot' + (i < index ? ' done' : i === index ? ' active' : '');
   });
 }
 
@@ -822,43 +746,57 @@ function showRevealCover(index) {
   document.getElementById('reveal-cover').style.display = 'block';
   document.getElementById('reveal-role').style.display = 'none';
   document.getElementById('reveal-player-name').textContent = state.players[index];
-  updateRevealDots(index);
+  buildRevealProgress();
+  // reset tap state
   document.getElementById('role-secret-content').classList.remove('shown');
   document.querySelector('#role-tap-box .tap-hint').style.display = 'block';
+  document.getElementById('impostor-hint-box').style.display = 'none';
 }
 
-function toggleWordReveal() {
-  const secret = document.getElementById('role-secret-content');
-  const hint = document.querySelector('#role-tap-box .tap-hint');
-  if (secret.classList.contains('shown')) {
-    secret.classList.remove('shown');
-    hint.style.display = 'block';
-  } else {
-    const p = state.players[state.revealIndex];
-    const isImpostor = state.impostors.includes(p);
-    document.getElementById('reveal-word').textContent = isImpostor ? '???' : state.word;
-    const badge = document.getElementById('reveal-badge');
-    badge.innerHTML = isImpostor
-      ? '<span class="role-badge impostor">🎭 You are the IMPOSTOR</span>'
-      : '<span class="role-badge crewmate">✅ You are a Crewmate</span>';
-    secret.classList.add('shown');
-    hint.style.display = 'none';
-  }
-}
-
-document.getElementById('reveal-cover').addEventListener('click', function() {
-  // Show category (always visible), then role box
+document.getElementById('reveal-cover').addEventListener('click', () => {
   document.getElementById('reveal-category-name').textContent =
     `${state.category.emoji} ${state.category.name}`;
   document.getElementById('reveal-cover').style.display = 'none';
   document.getElementById('reveal-role').style.display = 'block';
   document.getElementById('role-secret-content').classList.remove('shown');
   document.querySelector('#role-tap-box .tap-hint').style.display = 'block';
+  document.getElementById('impostor-hint-box').style.display = 'none';
 });
+
+function toggleWordReveal() {
+  const secret = document.getElementById('role-secret-content');
+  const hint = document.querySelector('#role-tap-box .tap-hint');
+  const hintBox = document.getElementById('impostor-hint-box');
+
+  if (secret.classList.contains('shown')) {
+    secret.classList.remove('shown');
+    hint.style.display = 'block';
+    hintBox.style.display = 'none';
+  } else {
+    const p = state.players[state.revealIndex];
+    const isImpostor = state.impostors.includes(p);
+    document.getElementById('reveal-word').textContent = isImpostor ? '???' : state.word;
+    document.getElementById('reveal-badge').innerHTML = isImpostor
+      ? '<span class="role-badge impostor">🎭 Ti si IMPOSTOR</span>'
+      : '<span class="role-badge crewmate">✅ Ti si Igrač</span>';
+    secret.classList.add('shown');
+    hint.style.display = 'none';
+
+    // Show hint box only for impostor
+    if (isImpostor) {
+      document.getElementById('impostor-hint-text').textContent = state.wordHint;
+      hintBox.style.display = 'block';
+    } else {
+      hintBox.style.display = 'none';
+    }
+  }
+}
 
 function nextReveal() {
   document.getElementById('role-secret-content').classList.remove('shown');
+  document.getElementById('impostor-hint-box').style.display = 'none';
   state.revealIndex++;
+  saveState();
   if (state.revealIndex >= state.players.length) {
     startRoundPlay();
   } else {
@@ -869,33 +807,30 @@ function nextReveal() {
 // ===================== ROUND PLAY =====================
 function startRoundPlay() {
   document.getElementById('round-display').textContent = `${state.currentRound} / ${state.totalRounds}`;
-  // Category banner
   document.getElementById('round-category-banner').innerHTML =
-    `<div class="cat-label">CATEGORY</div><div class="cat-value">${state.category.emoji} ${state.category.name}</div>`;
+    `<div class="cat-label">KATEGORIJA</div><div class="cat-value">${state.category.emoji} ${state.category.name}</div>`;
   renderCluesTurn();
   showScreen('round');
   document.getElementById('vote-now-btn').style.display = 'none';
   setTimeout(() => {
     document.getElementById('vote-now-btn').style.display = 'block';
-  }, state.players.length * 2000);
+  }, state.players.length * 1500);
 }
 
 function renderCluesTurn() {
-  const i = state.playerClueIndex;
-  const p = state.players[i % state.players.length];
+  const p = state.players[state.playerClueIndex % state.players.length];
   document.getElementById('current-player-name').textContent = p;
-  document.getElementById('round-turn-display').textContent = `Turn ${i + 1}`;
+  document.getElementById('round-turn-display').textContent = `Red ${state.playerClueIndex + 1}`;
 
   const log = document.getElementById('clues-log');
   if (state.clues.length === 0) {
-    log.innerHTML = '<div style="color:var(--muted); font-size:0.85rem; text-align:center;">No clues yet...</div>';
+    log.innerHTML = '<div style="color:var(--muted); font-size:0.85rem; text-align:center;">Nema nagoveštaja još...</div>';
   } else {
     log.innerHTML = state.clues.map(c =>
       `<div class="clue-row"><span class="clue-player">${c.player}</span><span class="clue-word">${c.clue}</span></div>`
     ).join('');
     log.scrollTop = log.scrollHeight;
   }
-
   document.getElementById('clue-input').value = '';
   setTimeout(() => document.getElementById('clue-input').focus(), 100);
 }
@@ -907,7 +842,7 @@ function submitClue() {
   const player = state.players[state.playerClueIndex % state.players.length];
   state.clues.push({ player, clue });
   state.playerClueIndex++;
-
+  saveState();
   if (state.playerClueIndex >= state.players.length) {
     proceedToVote();
   } else {
@@ -918,15 +853,16 @@ function submitClue() {
 function proceedToVote() {
   state.voterIndex = 0;
   state.votes = {};
+  saveState();
   renderVoteScreen();
   showScreen('vote');
 }
 
-// ===================== VOTE PHASE =====================
+// ===================== VOTE =====================
 function renderVoteScreen() {
   const currentVoter = state.players[state.voterIndex];
   document.getElementById('vote-pending-label').textContent =
-    `Now voting: ${currentVoter} (${state.voterIndex + 1}/${state.players.length})`;
+    `Glasanje: ${currentVoter} (${state.voterIndex + 1}/${state.players.length})`;
   document.getElementById('current-voter-name').textContent = currentVoter;
   state.selectedVote = null;
 
@@ -936,7 +872,7 @@ function renderVoteScreen() {
     if (p === currentVoter) return;
     const btn = document.createElement('button');
     btn.className = 'vote-btn';
-    btn.innerHTML = `<span>${p}</span>`;
+    btn.textContent = p;
     btn.onclick = () => {
       document.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
@@ -953,9 +889,9 @@ function confirmVote() {
   if (!state.selectedVote) return;
   state.votes[state.voterIndex] = { voter: state.players[state.voterIndex], suspect: state.selectedVote };
   state.voterIndex++;
-
+  saveState();
   if (state.voterIndex >= state.players.length) {
-    document.getElementById('vote-pending-label').textContent = 'All votes cast!';
+    document.getElementById('vote-pending-label').textContent = 'Svi su glasali!';
     document.getElementById('vote-list').innerHTML = '';
     document.getElementById('vote-confirm').style.display = 'none';
     document.getElementById('vote-submit-wrap').style.display = 'block';
@@ -968,66 +904,63 @@ function confirmVote() {
 function revealVotes() {
   const tally = {};
   state.players.forEach(p => tally[p] = 0);
-  Object.values(state.votes).forEach(v => {
-    tally[v.suspect] = (tally[v.suspect] || 0) + 1;
-  });
+  Object.values(state.votes).forEach(v => { tally[v.suspect] = (tally[v.suspect] || 0) + 1; });
 
   const maxVotes = Math.max(...Object.values(tally));
   const topCandidates = Object.keys(tally).filter(p => tally[p] === maxVotes);
   const eliminated = topCandidates.length === 1 ? topCandidates[0] : null;
+  state.impostorEliminated = eliminated;
+  saveState();
 
+  // Vote bars
   const barsContainer = document.getElementById('vote-results-bars');
   barsContainer.innerHTML = '';
-  const sortedPlayers = [...state.players].sort((a, b) => tally[b] - tally[a]);
-  const total = state.players.length - 1;
-
-  sortedPlayers.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'vote-result-row';
+  [...state.players].sort((a, b) => tally[b] - tally[a]).forEach(p => {
     const isTop = tally[p] === maxVotes && maxVotes > 0;
     const isImpostor = state.impostors.includes(p);
+    const total = state.players.length - 1;
+    const row = document.createElement('div');
+    row.className = 'vote-result-row';
     row.innerHTML = `
-      <div class="vr-name">${p} ${isImpostor ? '<span class="tag-impostor">(imp)</span>' : ''}</div>
+      <div class="vr-name">${p}${isImpostor ? ' <span class="tag-impostor">(imp)</span>' : ''}</div>
       <div class="vr-bar-wrap"><div class="vr-bar ${isTop ? 'top' : ''}" style="width:${Math.round((tally[p]/total)*100)}%"></div></div>
       <div class="vr-count">${tally[p]}</div>
     `;
     barsContainer.appendChild(row);
   });
 
-  const elimEl = document.getElementById('eliminated-announcement');
-  if (eliminated) {
-    elimEl.innerHTML = `<strong>${eliminated}</strong> was eliminated by vote!`;
-  } else {
-    elimEl.innerHTML = `🤝 It's a tie — nobody eliminated!`;
-  }
+  document.getElementById('eliminated-announcement').innerHTML = eliminated
+    ? `<strong>${eliminated}</strong> je eliminovan glasanjem!`
+    : `🤝 Nerešeno — niko nije eliminisan!`;
+
+  // Reset result elements
+  ['round-result-card','reveal-word-card','results-buttons','final-result-card'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
 
   const impostorEliminated = eliminated && state.impostors.includes(eliminated);
   const guessSection = document.getElementById('impostor-guess-section');
 
   if (impostorEliminated) {
     guessSection.style.display = 'block';
-    document.getElementById('guess-box-title').textContent = `🎯 ${eliminated}'s Last Chance!`;
+    document.getElementById('guess-box-title').textContent = `🎯 ${eliminated} — poslednja šansa!`;
     document.getElementById('impostor-guess-input').value = '';
   } else {
     guessSection.style.display = 'none';
-    resolveRound(eliminated, false, false);
+    resolveRound(false, false);
   }
 
   showScreen('results');
-  document.getElementById('round-result-card').style.display = 'none';
-  document.getElementById('reveal-word-card').style.display = 'none';
-  document.getElementById('results-buttons').style.display = 'none';
-  document.getElementById('final-result-card').style.display = 'none';
 }
 
 function submitImpostorGuess() {
   const guess = document.getElementById('impostor-guess-input').value.trim().toLowerCase();
   const correct = guess === state.word.toLowerCase();
-  resolveRound(state.impostors[0], true, correct);
+  resolveRound(true, correct);
   document.getElementById('impostor-guess-section').style.display = 'none';
 }
 
-function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
+function resolveRound(impostorCaught, impostorGuessedCorrect) {
   const impostorWin = !impostorCaught || impostorGuessedCorrect;
 
   const resultCard = document.getElementById('round-result-card');
@@ -1035,15 +968,15 @@ function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
 
   if (impostorWin) {
     document.getElementById('result-icon').textContent = '🎭';
-    document.getElementById('result-title').textContent = 'Impostors Win!';
+    document.getElementById('result-title').textContent = 'Impostori pobedili!';
     document.getElementById('result-sub').textContent = impostorGuessedCorrect
-      ? 'They guessed the word — sneaky comeback!'
-      : 'The impostors blended in perfectly.';
+      ? 'Pogodio je reč — neverovatni preokret!'
+      : 'Impostori su se savršeno uklopili.';
     state.impostors.forEach(imp => state.scores[imp] = (state.scores[imp] || 0) + 2);
   } else {
     document.getElementById('result-icon').textContent = '🕵️';
-    document.getElementById('result-title').textContent = 'Crewmates Win!';
-    document.getElementById('result-sub').textContent = 'The impostor was unmasked!';
+    document.getElementById('result-title').textContent = 'Igrači pobedili!';
+    document.getElementById('result-sub').textContent = 'Impostor je razotkriven!';
     state.players.filter(p => !state.impostors.includes(p))
       .forEach(p => state.scores[p] = (state.scores[p] || 0) + 2);
   }
@@ -1053,21 +986,17 @@ function resolveRound(eliminated, impostorCaught, impostorGuessedCorrect) {
   document.getElementById('revealed-secret-word').textContent = state.word;
   document.getElementById('revealed-impostors').textContent = state.impostors.join(', ');
 
-  document.getElementById('results-buttons').style.display = 'block';
+  saveState();
 
   if (state.currentRound >= state.totalRounds) {
-    document.getElementById('next-round-btn').style.display = 'none';
-    // Show final after short delay
-    setTimeout(showFinalResults, 100);
+    showFinalResults();
   } else {
-    document.getElementById('next-round-btn').style.display = 'block';
-    document.getElementById('next-round-btn').textContent = `▶️ Round ${state.currentRound + 1}`;
+    document.getElementById('results-buttons').style.display = 'block';
+    document.getElementById('next-round-btn').textContent = `▶️ Runda ${state.currentRound + 1}`;
   }
 }
 
-function nextRound() {
-  startRound();
-}
+function nextRound() { startRound(); }
 
 function showFinalResults() {
   document.getElementById('results-buttons').style.display = 'none';
@@ -1076,30 +1005,69 @@ function showFinalResults() {
 
   const sorted = [...state.players].sort((a, b) => state.scores[b] - state.scores[a]);
   const max = state.scores[sorted[0]];
-
-  let html = '';
-  sorted.forEach((p, i) => {
+  document.getElementById('scoreboard').innerHTML = sorted.map((p, i) => {
     const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}.`;
-    const isWinner = state.scores[p] === max;
-    html += `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
+    return `<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
       <span>${medal} <strong>${p}</strong></span>
-      <span style="color:${isWinner ? 'var(--accent2)' : 'var(--muted)'}; font-weight:700;">${state.scores[p]} pts</span>
+      <span style="color:${state.scores[p]===max?'var(--accent2)':'var(--muted)'}; font-weight:700;">${state.scores[p]} bod.</span>
     </div>`;
-  });
-  document.getElementById('scoreboard').innerHTML = html;
+  }).join('');
 }
 
 function resetToSetup() {
-  state.players = [];
-  state.scores = {};
-  state.currentRound = 0;
-  state.selectedCategory = null;
-  state.customWord = '';
+  clearState();
   document.getElementById('custom-word').value = '';
   renderPlayers();
   renderCategories();
   showScreen('setup');
 }
+
+// ===================== RESTORE STATE ON LOAD =====================
+function restoreUI() {
+  // Restore players list
+  renderPlayers();
+  renderCategories();
+
+  if (state.selectedCategory) {
+    const sel = document.getElementById('impostor-count');
+    sel.value = state.impostorCount;
+    document.getElementById('round-count').value = state.totalRounds;
+    document.getElementById('custom-word').value = state.customWord || '';
+  }
+
+  const s = state.screen;
+  if (!s || s === 'setup') { showScreen('setup'); return; }
+
+  if (s === 'reveal') {
+    buildRevealProgress();
+    showRevealCover(state.revealIndex);
+    showScreen('reveal');
+    return;
+  }
+
+  if (s === 'round') {
+    document.getElementById('round-display').textContent = `${state.currentRound} / ${state.totalRounds}`;
+    document.getElementById('round-category-banner').innerHTML =
+      `<div class="cat-label">KATEGORIJA</div><div class="cat-value">${state.category.emoji} ${state.category.name}</div>`;
+    renderCluesTurn();
+    showScreen('round');
+    document.getElementById('vote-now-btn').style.display = 'block';
+    return;
+  }
+
+  if (s === 'vote') {
+    renderVoteScreen();
+    showScreen('vote');
+    return;
+  }
+
+  if (s === 'results') {
+    // Just go back to setup if we land on results after refresh — edge case
+    showScreen('setup');
+  }
+}
+
+restoreUI();
 </script>
 </body>
 </html>
