@@ -264,6 +264,7 @@
   </div>
 
   <button class="btn" onclick="startGame()">🎮 Pokreni igru</button>
+  <button class="btn ghost" style="margin-top:8px;" onclick="resetToSetup()">🔄 Resetuj igru</button>
 </div>
 
 <!-- ====== REVEAL ====== -->
@@ -825,9 +826,9 @@ function renderCluesTurn() {
   const log = document.getElementById('clues-log');
   if (state.clues.length === 0) {
     log.innerHTML = '<div style="color:var(--muted); font-size:0.85rem; text-align:center;">Nema nagoveštaja još...</div>';
-  } else {
-    log.innerHTML = state.clues.map(c =>
-      `<div class="clue-row"><span class="clue-player">${c.player}</span><span class="clue-word">${c.clue}</span></div>`
+  }
+
+<span class="clue-word">${c.clue}</span></div>`
     ).join('');
     log.scrollTop = log.scrollHeight;
   }
